@@ -9,6 +9,7 @@ const cors = require('cors')
 const user = require('./routes/user')
 const auth = require('./middlewares/requireAuthUser')
 const content = require('./routes/content')
+const category = require('./routes/category')
 
 
 
@@ -38,6 +39,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(user)
 app.use(content)
+app.use(category)
 
 
 

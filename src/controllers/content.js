@@ -59,6 +59,5 @@ module.exports = {
                 error: err.message
             })
         }
-
     },
 }
