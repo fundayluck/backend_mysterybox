@@ -5,7 +5,6 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const multer = require('multer')
-const path = require('path')
 const cors = require('cors')
 const user = require('./routes/user')
 const auth = require('./middlewares/requireAuthUser')
@@ -37,7 +36,7 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
-const maxSize = 5 * 1025
+const maxSize = 5 * 1024 * 1024 * 1024
 
 app.use(cors())
 app.use(bodyParser.json())
