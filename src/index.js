@@ -23,7 +23,8 @@ const fileStorage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         cb(null, new Date().getTime() + '-' + file.originalname)
-    }
+    },
+
 })
 
 const fileFilter = (req, file, cb) => {
@@ -36,10 +37,12 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
+const maxSize = 5 * 1025
+
 app.use(cors())
 app.use(bodyParser.json())
 app.use('/images', express.static('images'));
-app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'))
+app.use(multer({ storage: fileStorage, fileFilter: fileFilter, limits: { fileSize: maxSize } }).single('image'))
 app.use(user)
 app.use(content)
 app.use(category)
