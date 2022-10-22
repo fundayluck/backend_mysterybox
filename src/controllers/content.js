@@ -4,25 +4,24 @@ const Content = mongoose.model("content")
 
 module.exports = {
     createContent: async (req, res) => {
-        const { image, nameProd, name, hadiah, lokasi } = req.body
+        const { nameProd, name, hadiah, lokasi } = req.body
         const findCategory = await Category.findById(req.body.id_category)
         try {
             const content = new Content({
                 id_category: findCategory,
-                image,
+                image: req.file.path,
                 nameProd,
                 name,
                 hadiah,
                 lokasi,
             })
-
             await content.save()
             res.send({
                 status: 'success',
                 message: 'data berhasil disimpan'
             })
         } catch (err) {
-            res.status(422).send({ err })
+            res.status(422).send(err)
         }
     },
     deleteContent: async (req, res) => {

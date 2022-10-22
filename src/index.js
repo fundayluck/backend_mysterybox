@@ -5,11 +5,13 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const multer = require('multer')
+const path = require('path')
 const cors = require('cors')
 const user = require('./routes/user')
 const auth = require('./middlewares/requireAuthUser')
 const content = require('./routes/content')
 const category = require('./routes/category')
+
 
 
 
@@ -20,10 +22,9 @@ const fileStorage = multer.diskStorage({
         cb(null, 'images')
     },
     filename: (req, file, cb) => {
-        cb(null, new Date().toString() + '-' + file.originalname)
+        cb(null, new Date().getTime() + '-' + file.originalname)
     }
 })
-
 
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === 'image/png' ||
@@ -37,12 +38,11 @@ const fileFilter = (req, file, cb) => {
 
 app.use(cors())
 app.use(bodyParser.json())
+app.use('/images', express.static('images'));
+app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'))
 app.use(user)
 app.use(content)
 app.use(category)
-
-
-
 
 const mongoUrl =
     'mongodb+srv://mysteryboxindo:Honginterna$ional1010@mysterybox.lglrjch.mongodb.net/test'
