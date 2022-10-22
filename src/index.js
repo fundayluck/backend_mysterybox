@@ -36,7 +36,7 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
-const maxSize = 5 * 1024 * 1024 * 1024
+const maxSize = 5 * 1024 * 1024
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -45,6 +45,13 @@ app.use(multer({ storage: fileStorage, fileFilter: fileFilter, limits: { fileSiz
 app.use(user)
 app.use(content)
 app.use(category)
+
+app.use((error, req, res, next) => {
+    const status = error.errorStatus || 500
+    const message = error.message
+    const data = error.data
+    res.status(status).json({ message: message, data: data })
+})
 
 const mongoUrl =
     'mongodb+srv://mysteryboxindo:Honginterna$ional1010@mysterybox.lglrjch.mongodb.net/test'

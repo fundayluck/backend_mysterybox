@@ -4,11 +4,9 @@ const contentSchema = new mongoose.Schema({
     id_category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "category",
-        required: true,
     },
     image: {
         type: String,
-        required: true
     },
     name: {
         type: String,
