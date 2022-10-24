@@ -47,5 +47,19 @@ module.exports = {
         } catch {
             res.json({ message: 'Error' })
         }
-    }
+    },
+    getAllUser: async (req, res, next) => {
+        try {
+            const user = await Admin.find({})
+            res.send({
+                status: 'success',
+                data: user
+            })
+        } catch (err) {
+            res.send({
+                status: 'failed',
+                error: err.message
+            })
+        }
+    },
 }
