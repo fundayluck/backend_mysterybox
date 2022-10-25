@@ -11,6 +11,7 @@ const auth = require('./middlewares/requireAuthUser')
 const content = require('./routes/content')
 const category = require('./routes/category')
 const email = require('./routes/email')
+const main = require('./routes/main')
 
 
 
@@ -44,6 +45,7 @@ app.use(bodyParser.json())
 app.use('/images', express.static('images'));
 app.use(multer({ storage: fileStorage, fileFilter: fileFilter, limits: { fileSize: maxSize } }).single('image'))
 app.use(email)
+app.use(main)
 app.use(user)
 app.use(content)
 app.use(category)
