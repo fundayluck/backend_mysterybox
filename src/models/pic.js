@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const picSchema = new mongoose.Schema({
-    id_user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
-    },
     nama: {
         type: String,
     },
