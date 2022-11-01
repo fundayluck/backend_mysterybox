@@ -1,7 +1,10 @@
+const mongoose = require("mongoose")
 const nodemailer = require('nodemailer');
+const PIC = mongoose.model('pic')
+
 
 module.exports = {
-    sendEmail: (req, res, next) => {
+    sendEmail: async (req, res, next) => {
         const {
             picName,
             mobile,
@@ -68,5 +71,19 @@ module.exports = {
                 res.send('success')
             }
         })
+        try {
+            const emailSend = new PIC({
+                nama: picName,
+                brand: brandName,
+                email: email,
+                no_telp: mobile,
+                address: address
+            })
+            await emailSend.save()
+            res.status(200).send('email terkirim ke database')
+        } catch (err) {
+            res.status(422).send(err.message)
+        }
+
     }
 }
