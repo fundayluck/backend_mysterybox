@@ -1,11 +1,13 @@
 const mongoose = require("mongoose")
+const User = mongoose.model('user')
 const Category = mongoose.model('category')
 const Content = mongoose.model("content")
 const { validationResult } = require('express-validator')
 
 module.exports = {
     createContent: async (req, res, next) => {
-        const { name, hadiah, lokasi } = req.body
+        const { nama, namaBarang, lokasi, desc } = req.body
+        const findUser = await User.findById(req.body.id_user)
         const findCategory = await Category.findById(req.body.id_category)
 
         const errors = validationResult(req)
@@ -18,10 +20,12 @@ module.exports = {
         }
 
         const content = new Content({
+            id_user: findUser,
             id_category: findCategory,
-            image: req.file.path,
-            name,
-            hadiah,
+            gambar: req.file.path,
+            desc,
+            nama,
+            namaBarang,
             lokasi,
         })
         await content.save()
