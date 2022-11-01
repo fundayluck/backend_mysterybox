@@ -12,11 +12,7 @@ module.exports = {
             detailKota,
             selectKecamatan,
             postalcode,
-            address1,
-            detailProvinsi1,
-            detailKota1,
-            selectKecamatan1,
-            postalcode1
+
         } = req.body
         console.log(picName,
             mobile,
@@ -27,15 +23,11 @@ module.exports = {
             detailKota,
             selectKecamatan,
             postalcode,
-            address1,
-            detailProvinsi1,
-            detailKota1,
-            selectKecamatan1,
-            postalcode1)
+        )
         const transporter = nodemailer.createTransport({
             host: "mail.mysteryboxindonesia.co.id",
-            port: 465,
-            secure: true, // use TLS
+            port: 587,
+            secure: false, // use TLS
             auth: {
                 user: "contact@mysteryboxindonesia.co.id",
                 pass: "Honginterna$ional1010",
@@ -48,7 +40,7 @@ module.exports = {
 
         const mailOptions = {
             from: "contact@mysteryboxindonesia.co.id",
-            to: 'afandayul@gmail.com',
+            to: 'test@mysteryboxindonesia.co.id',
             subject: `message from ${picName}`,
             text: `
             Pic Information 
@@ -63,13 +55,7 @@ module.exports = {
             Kota : ${detailKota} 
             Kecamatan : ${selectKecamatan} 
             kode pos : ${postalcode} 
-            
-            Vending Machine Location
-            address : ${address1} 
-            Provinsi : ${detailProvinsi1}
-            Kota : ${detailKota1} 
-            Kecamatan : ${selectKecamatan1} 
-            kode pos : ${postalcode1} `,
+             `,
 
         }
 
