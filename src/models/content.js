@@ -4,14 +4,23 @@ const contentSchema = new mongoose.Schema({
     id_category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "category",
+        required: true
     },
-    image: {
+    id_user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+        required: true
+    },
+    gambar: {
         type: String,
     },
-    name: {
+    desc: {
         type: String,
     },
-    hadiah: {
+    nama: {
+        type: String,
+    },
+    namaBarang: {
         type: String,
     },
     lokasi: {
