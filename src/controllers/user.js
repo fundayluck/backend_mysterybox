@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const Admin = mongoose.model("user")
+const Role = mongoose.model("role")
 const jwt = require("jsonwebtoken")
 
 module.exports = {
@@ -27,8 +28,10 @@ module.exports = {
     },
     createUser: async (req, res) => {
         const { username, password, } = req.body
+        const findRole = await Role.findById(req.body.id_role)
         try {
             const admin = new Admin({
+                id_role: findRole,
                 username,
                 password,
             })
@@ -50,7 +53,7 @@ module.exports = {
     },
     getAllUser: async (req, res, next) => {
         try {
-            const user = await Admin.find({})
+            const user = await Admin.find({}).populate('id_role')
             res.send({
                 status: 'success',
                 data: user

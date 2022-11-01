@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const adminSchema = new mongoose.Schema({
+    id_role: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "role",
+        required: true
+    },
     username: {
         type: String,
         unique: true,
