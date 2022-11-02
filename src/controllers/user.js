@@ -65,4 +65,19 @@ module.exports = {
             })
         }
     },
+    getAllById: async (req, res, next) => {
+        try {
+            // const content = await Category.findOne({ _id: req.params.categoryId })
+            const user = await Admin.findOne({ _id: req.params.userId }).populate('id_role')
+            res.send({
+                status: 'success',
+                data: user
+            })
+        } catch (err) {
+            res.send({
+                status: 'failed',
+                error: err.message
+            })
+        }
+    },
 }

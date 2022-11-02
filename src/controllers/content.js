@@ -10,15 +10,6 @@ module.exports = {
         const findUser = await User.findById(req.body.id_user)
         const findCategory = await Category.findById(req.body.id_category)
 
-        const errors = validationResult(req)
-
-        if (!errors.isEmpty()) {
-            const err = new Error('invalid Value')
-            err.errorStatus = 400
-            err.data = errors.array()
-            throw err;
-        }
-
         const content = new Content({
             id_user: findUser,
             id_category: findCategory,
