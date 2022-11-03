@@ -4,6 +4,23 @@ const Category = mongoose.model('category')
 const Content = mongoose.model("content")
 
 module.exports = {
+    editStatus: async (req, res, next) => {
+        const { show } = req.body
+        try {
+            await Content.updateOne(
+                { _id: req.params.contentId },
+                {
+                    show,
+                },
+            )
+            res.send({
+                status: 200,
+                message: 'berhasil diubah'
+            })
+        } catch (err) {
+            res.status(422).send(err.message)
+        }
+    },
     createContent: async (req, res, next) => {
         const { nama, namaBarang, lokasi, desc } = req.body
         const findUser = await User.findById(req.body.id_user)
@@ -18,6 +35,7 @@ module.exports = {
                 nama,
                 namaBarang,
                 lokasi,
+                show: 'false',
             })
             await content.save()
             res.status(201).json(content)

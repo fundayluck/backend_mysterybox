@@ -26,6 +26,9 @@ const contentSchema = new mongoose.Schema({
     lokasi: {
         type: String,
     },
+    show: {
+        type: String
+    }
 })
 
 mongoose.model("content", contentSchema)
