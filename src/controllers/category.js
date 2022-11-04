@@ -2,6 +2,19 @@ const mongoose = require("mongoose")
 const Category = mongoose.model('category')
 
 module.exports = {
+    createCategory : async (req, res) => {
+        const { category } = req.body
+        try{
+            const categoryCreate = new Category({
+                category,
+            })
+            await categoryCreate.save()
+            res.status(201).json(categoryCreate)
+        }catch(e){
+            console.log(e);
+        }
+        
+    },
     getCategory: async (req, res) => {
         try {
             const content = await Category.find()
