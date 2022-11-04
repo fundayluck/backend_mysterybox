@@ -7,6 +7,15 @@ const Subs = mongoose.model('subs')
 module.exports = {
     sendSubs: async (req, res, next) => {
         const { email } = req.body
+        try {
+            const doc = new Subs.find({
+                email
+            })
+            await doc.save()
+            res.status(200).send('email terkirim ke database')
+        } catch (error) {
+            res.status(422).send(err.message)
+        }
     },
     sendEmail: async (req, res, next) => {
         const {
