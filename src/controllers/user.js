@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken")
 
 module.exports = {
     user: async (req, res) => {
-        const { username, password } = req.body;
+        const { username, password, last_login } = req.body;
 
         if (!username || !password) {
             return res
@@ -13,27 +13,29 @@ module.exports = {
                 .send({ error: "username and password are required" });
         }
 
-        const admin = await Admin.findOne({ username });
+        const admin = await Admin.findOne({ username })
+
         if (!admin) {
             return res.status(422).send({ error: "invali password or email" });
         }
-
         try {
+            await Admin.findOneAndUpdate({ username }, { last_login })
             await admin.comparePassword(password);
             const token = jwt.sign({ adminId: admin._id }, "MY_SECRET_KEY");
-            res.send({ token });
+            res.send({ token, admin });
         } catch (err) {
             return res.status(422).send({ error: "invalid password or email" });
         }
     },
     createUser: async (req, res) => {
-        const { username, password, } = req.body
+        const { username, password } = req.body
         const findRole = await Role.findById(req.body.id_role)
         try {
             const admin = new Admin({
                 id_role: findRole,
                 username,
                 password,
+                last_login: '',
             })
             await admin.save()
 

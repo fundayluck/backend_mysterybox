@@ -16,6 +16,9 @@ const adminSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    last_login: {
+        type: String
+    }
 });
 
 adminSchema.pre("save", function (next) {

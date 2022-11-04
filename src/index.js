@@ -5,6 +5,7 @@ require('./models/role')
 require('./models/pic')
 require('./models/roleHasPermission')
 require('./models/permission')
+require('./models/subs')
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
@@ -39,7 +40,7 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
-const maxSize = 5 * 1024 * 1024
+const maxSize = 10 * 1024
 
 app.use(cors())
 app.use(bodyParser.json())

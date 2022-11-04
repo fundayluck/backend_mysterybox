@@ -1,9 +1,13 @@
 const mongoose = require("mongoose")
 const nodemailer = require('nodemailer');
 const PIC = mongoose.model('pic')
+const Subs = mongoose.model('subs')
 
 
 module.exports = {
+    sendSubs: async (req, res, next) => {
+        const { email } = req.body
+    },
     sendEmail: async (req, res, next) => {
         const {
             picName,
