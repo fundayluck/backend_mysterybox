@@ -87,14 +87,15 @@ module.exports = {
         }
     },
     editContent: async (req, res, next) => {
-        const { desc } = req.body
+        const { desc, id_user } = req.body
         try {
-            await Content.updateOne(
+            await Content.findOneAndUpdate(
                 { _id: req.params.contentId },
                 {
+                    id_user,
                     desc,
-                },
-            )
+                    updateAt: new Date()
+                })
             res.send({
                 status: 200,
                 message: 'berhasil diubah'

@@ -29,6 +29,6 @@ const contentSchema = new mongoose.Schema({
     show: {
         type: String
     }
-})
+}, { timestamps: true })
 
 mongoose.model("content", contentSchema)

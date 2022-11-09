@@ -38,7 +38,7 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
-const maxSize = 10 * 1024
+const maxSize = 20 * 1024 * 1024
 
 app.use(cors())
 app.use(bodyParser.json())
