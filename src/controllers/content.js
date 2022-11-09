@@ -40,7 +40,7 @@ module.exports = {
             await content.save()
             res.status(201).json(content)
         } catch (err) {
-            console.log(err);
+            res.status(422).send(err.message)
         }
     },
     deleteContent: async (req, res, next) => {
@@ -104,4 +104,20 @@ module.exports = {
             res.status(422).send(err.message)
         }
     },
+    createYoutube: async (req, res, next) => {
+        const { desc } = req.body
+        const findUser = await User.findById(req.body.id_user)
+        const findCategory = await Category.findById(req.body.id_category)
+        try {
+            const content = new Content({
+                id_user: findUser,
+                id_category: findCategory,
+                desc,
+            })
+            await content.save()
+            res.status(201).json(content)
+        } catch (error) {
+            res.status(422).send(err.message)
+        }
+    }
 }
