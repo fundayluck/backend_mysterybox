@@ -4,6 +4,7 @@ require('./models/user')
 require('./models/role')
 require('./models/pic')
 require('./models/subs')
+require('./models/location')
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
@@ -15,6 +16,7 @@ const content = require('./routes/content')
 const category = require('./routes/category')
 const email = require('./routes/email')
 const main = require('./routes/main')
+const location = require('./routes/location')
 
 const app = express()
 
@@ -49,6 +51,7 @@ app.use(main)
 app.use(user)
 app.use(content)
 app.use(category)
+app.use(location)
 
 app.use((error, req, res, next) => {
     const status = error.errorStatus || 500

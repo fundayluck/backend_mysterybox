@@ -1,19 +1,27 @@
 const mongoose = require("mongoose");
 
 const locationSchema = new mongoose.Schema({
+    id_user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+        required: true
+    },
     nama: {
         type: String
     },
     gambar: {
         type: String,
     },
+    detail: {
+        type: String,
+    },
     link: {
         type: String,
     },
-    latitude: {
+    lat: {
         type: String
     },
-    longitude: {
+    long: {
         type: String
     }
 }, { timestamps: true })
