@@ -16,6 +16,6 @@ const picSchema = new mongoose.Schema({
     address: {
         type: String
     }
-})
+}, { timestamps: true })
 
 mongoose.model("pic", picSchema)

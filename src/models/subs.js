@@ -6,6 +6,6 @@ const subsSchema = new mongoose.Schema({
         required: true
     }
 
-})
+}, { timestamps: true })
 
 mongoose.model("subs", subsSchema)
