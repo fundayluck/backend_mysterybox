@@ -41,6 +41,11 @@ module.exports = {
                 status: 'failed',
                 message: 'email sudah terdaftar!'
             })
+        } else if (email === '') {
+            res.status(400).send({
+                status: 'failed',
+                message: 'email harus diisi!'
+            })
         } else {
 
             const transporter = nodemailer.createTransport({
