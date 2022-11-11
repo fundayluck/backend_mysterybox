@@ -5,10 +5,12 @@ const User = mongoose.model('user')
 module.exports = {
     edit: async (req, res, next) => {
         const { about, vision, mission } = req.body
+        const findUser = await User.findById(req.body.id_user)
         try {
             await Aboutus.updateOne(
                 { _id: req.params.AboutusId },
                 {
+                    id_user: findUser,
                     about,
                     vision,
                     mission,
