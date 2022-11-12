@@ -66,7 +66,7 @@ module.exports = {
     },
     getContent: async (req, res, next) => {
         try {
-            const content = await Content.find({}).populate('id_category')
+            const content = await Content.find({}).populate('id_category').populate('id_user')
             res.send({
                 status: 'success',
                 data: content
@@ -80,7 +80,9 @@ module.exports = {
     },
     getContentById: async (req, res, next) => {
         try {
-            const content = await Content.findOne({ _id: req.params.contentId }).populate('id_category')
+            const content = await Content.findOne({ _id: req.params.contentId })
+                .populate('id_category')
+                .populate('id_user')
             res.json(content)
         } catch (err) {
             res.send(err.message)
