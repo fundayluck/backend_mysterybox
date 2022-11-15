@@ -3,6 +3,19 @@ const nodemailer = require('nodemailer');
 const PIC = mongoose.model('pic')
 const Subs = mongoose.model('subs')
 
+const hbs = require('nodemailer-express-handlebars')
+const path = require('path')
+
+const handlebarOptions = {
+    viewEngine: {
+        partialsDir: path.resolve('./views/'),
+        defaultLayout: false,
+    },
+    viewPath: path.resolve('./views/'),
+};
+
+
+
 
 module.exports = {
     getSubs: async (req, res, next) => {
@@ -61,11 +74,14 @@ module.exports = {
                     rejectUnauthorized: false,
                 },
             })
+
+            transporter.use('compile', hbs(handlebarOptions))
+
             const mailOptions = {
                 from: "contact@mysteryboxindonesia.co.id",
                 to: email,
                 subject: 'Thank You For Subscribing',
-                html: ""
+                template: 'index'
 
             }
             transporter.sendMail(mailOptions, (error, info) => {
@@ -125,16 +141,16 @@ module.exports = {
             text: ` 
             Pic Information 
             Pic Name: ${picName} 
-            Mobile number : ${mobile} 
-            Brand Name: ${brandName} 
-            email : ${email} 
+            Mobile number: ${mobile} 
+            Brand Name: ${brandName}
+            email: ${email} 
             
-            Pic Address 
-            address : ${address} 
-            Provinsi : ${detailProvinsi}
-            Kota : ${detailKota} 
-            Kecamatan : ${selectKecamatan} 
-            kode pos : ${postalcode} 
+            Pic Address
+            address: ${address}
+            Provinsi: ${detailProvinsi}
+            Kota: ${detailKota}
+            Kecamatan: ${selectKecamatan} 
+            kode pos: ${postalcode}
             `,
         }
 
