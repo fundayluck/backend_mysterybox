@@ -64,8 +64,8 @@ module.exports = {
             const mailOptions = {
                 from: "contact@mysteryboxindonesia.co.id",
                 to: email,
-                subject: 'Subscribe',
-                text: 'thank you for subscribing',
+                subject: 'Thank You For Subscribing',
+                html: ""
 
             }
             transporter.sendMail(mailOptions, (error, info) => {
@@ -101,18 +101,9 @@ module.exports = {
             detailKota,
             selectKecamatan,
             postalcode,
-
+            category
         } = req.body
-        console.log(picName,
-            mobile,
-            brandName,
-            email,
-            address,
-            detailProvinsi,
-            detailKota,
-            selectKecamatan,
-            postalcode,
-        )
+
         const transporter = nodemailer.createTransport({
             host: "mail.mysteryboxindonesia.co.id",
             port: 587,
@@ -130,8 +121,8 @@ module.exports = {
         const mailOptions = {
             from: "contact@mysteryboxindonesia.co.id",
             to: 'test@mysteryboxindonesia.co.id',
-            subject: `message from ${picName}`,
-            text: `
+            subject: `message from ${picName} for ${category}`,
+            text: ` 
             Pic Information 
             Pic Name: ${picName} 
             Mobile number : ${mobile} 
@@ -144,8 +135,7 @@ module.exports = {
             Kota : ${detailKota} 
             Kecamatan : ${selectKecamatan} 
             kode pos : ${postalcode} 
-             `,
-
+            `,
         }
 
         transporter.sendMail(mailOptions, (error, info) => {
@@ -157,13 +147,15 @@ module.exports = {
                 res.send('success')
             }
         })
+
         try {
             const emailSend = new PIC({
                 nama: picName,
                 brand: brandName,
                 email: email,
                 no_telp: mobile,
-                address: address
+                address: address,
+                category: category
             })
             await emailSend.save()
             res.status(200).send('email terkirim ke database')

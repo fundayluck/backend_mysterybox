@@ -15,6 +15,9 @@ const picSchema = new mongoose.Schema({
     },
     address: {
         type: String
+    },
+    category: {
+        type: String
     }
 }, { timestamps: true })
 
