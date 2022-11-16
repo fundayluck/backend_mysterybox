@@ -46,8 +46,9 @@ const maxSize = 20 * 1024 * 1024
 
 app.use(cors())
 app.use(bodyParser.json())
-app.use('/images', express.static('images'));
-app.use(multer({ storage: fileStorage, fileFilter: fileFilter, limits: { fileSize: maxSize } }).single('image'))
+app.use('/images', express.static('images'))
+app.use('/assets', express.static('assets'))
+// app.use(multer({ storage: fileStorage, fileFilter: fileFilter, limits: { fileSize: maxSize } }).single('image'))
 app.use(email)
 app.use(main)
 app.use(user)

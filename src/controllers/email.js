@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 const PIC = mongoose.model('pic')
 const Subs = mongoose.model('subs')
 
+
 const hbs = require('nodemailer-express-handlebars')
 const path = require('path')
 
@@ -117,9 +118,10 @@ module.exports = {
             detailKota,
             selectKecamatan,
             postalcode,
-            category
+            category,
+            description
         } = req.body
-
+        const upload = req.file.path
         const transporter = nodemailer.createTransport({
             host: "mail.mysteryboxindonesia.co.id",
             port: 587,
@@ -136,7 +138,7 @@ module.exports = {
 
         const mailOptions = {
             from: "contact@mysteryboxindonesia.co.id",
-            to: 'test@mysteryboxindonesia.co.id',
+            to: 'afandayul@gmail.com',
             subject: `message from ${picName} for ${category}`,
             text: ` 
             Pic Information 
@@ -144,7 +146,7 @@ module.exports = {
             Mobile number: ${mobile} 
             Brand Name: ${brandName}
             email: ${email} 
-            
+
             Pic Address
             address: ${address}
             Provinsi: ${detailProvinsi}
@@ -152,6 +154,11 @@ module.exports = {
             Kecamatan: ${selectKecamatan} 
             kode pos: ${postalcode}
             `,
+            attachments: [
+                {
+                    path: upload
+                }
+            ]
         }
 
         transporter.sendMail(mailOptions, (error, info) => {
@@ -165,16 +172,24 @@ module.exports = {
         })
 
         try {
+            console.log('mengirim');
             const emailSend = new PIC({
                 nama: picName,
                 brand: brandName,
+                category: category,
                 email: email,
                 no_telp: mobile,
                 address: address,
-                category: category
+                file: upload,
+                description: description,
+
             })
             await emailSend.save()
-            res.status(200).send('email terkirim ke database')
+            res.status(200).send({
+                data: emailSend,
+                message: 'email terkirim ke database'
+            })
+            console.log('terkirim');
         } catch (err) {
             res.status(422).send(err.message)
         }

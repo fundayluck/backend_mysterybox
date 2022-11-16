@@ -7,6 +7,9 @@ const picSchema = new mongoose.Schema({
     brand: {
         type: String,
     },
+    category: {
+        type: String
+    },
     email: {
         type: String,
     },
@@ -16,9 +19,13 @@ const picSchema = new mongoose.Schema({
     address: {
         type: String
     },
-    category: {
+    file: {
+        type: String
+    },
+    description: {
         type: String
     }
+
 }, { timestamps: true })
 
 mongoose.model("pic", picSchema)
