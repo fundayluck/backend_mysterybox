@@ -138,7 +138,7 @@ module.exports = {
 
         const mailOptions = {
             from: "contact@mysteryboxindonesia.co.id",
-            to: 'afandayul@gmail.com',
+            to: 'test@mysteryboxindonesia.co.id',
             subject: `message from ${picName} for ${category}`,
             text: ` 
             Pic Information 
@@ -210,7 +210,6 @@ module.exports = {
             category,
             description
         } = req.body
-
         const transporter = nodemailer.createTransport({
             host: "mail.mysteryboxindonesia.co.id",
             port: 587,
@@ -224,10 +223,9 @@ module.exports = {
                 rejectUnauthorized: false,
             },
         })
-
         const mailOptions = {
             from: "contact@mysteryboxindonesia.co.id",
-            to: 'afandayul@gmail.com',
+            to: 'test@mysteryboxindonesia.co.id',
             subject: `message from ${picName} for ${category}`,
             text: ` 
             Pic Information 
@@ -244,8 +242,6 @@ module.exports = {
             kode pos: ${postalcode}
             `,
         }
-
-
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
                 console.log(error)
