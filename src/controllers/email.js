@@ -121,7 +121,7 @@ module.exports = {
             category,
             description
         } = req.body
-        const upload = req.file.path
+
         const transporter = nodemailer.createTransport({
             host: "mail.mysteryboxindonesia.co.id",
             port: 587,
@@ -155,11 +155,13 @@ module.exports = {
             kode pos: ${postalcode}
             `,
             attachments: [
+
                 {
-                    path: upload
+                    path: req.file.path
                 }
             ]
         }
+
 
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
@@ -172,7 +174,6 @@ module.exports = {
         })
 
         try {
-            console.log('mengirim');
             const emailSend = new PIC({
                 nama: picName,
                 brand: brandName,
@@ -180,7 +181,7 @@ module.exports = {
                 email: email,
                 no_telp: mobile,
                 address: address,
-                file: upload,
+                file: req.file.path,
                 description: description,
 
             })
@@ -189,7 +190,89 @@ module.exports = {
                 data: emailSend,
                 message: 'email terkirim ke database'
             })
-            console.log('terkirim');
+
+        } catch (err) {
+            res.status(422).send(err.message)
+        }
+
+    },
+    sendEmailWithoutAttach: async (req, res, next) => {
+        const {
+            picName,
+            mobile,
+            brandName,
+            email,
+            address,
+            detailProvinsi,
+            detailKota,
+            selectKecamatan,
+            postalcode,
+            category,
+            description
+        } = req.body
+
+        const transporter = nodemailer.createTransport({
+            host: "mail.mysteryboxindonesia.co.id",
+            port: 587,
+            secure: false, // use TLS
+            auth: {
+                user: "contact@mysteryboxindonesia.co.id",
+                pass: "Honginterna$ional1010",
+            },
+            tls: {
+                // do not fail on invalid certs
+                rejectUnauthorized: false,
+            },
+        })
+
+        const mailOptions = {
+            from: "contact@mysteryboxindonesia.co.id",
+            to: 'afandayul@gmail.com',
+            subject: `message from ${picName} for ${category}`,
+            text: ` 
+            Pic Information 
+            Pic Name: ${picName} 
+            Mobile number: ${mobile} 
+            Brand Name: ${brandName}
+            email: ${email} 
+
+            Pic Address
+            address: ${address}
+            Provinsi: ${detailProvinsi}
+            Kota: ${detailKota}
+            Kecamatan: ${selectKecamatan} 
+            kode pos: ${postalcode}
+            `,
+        }
+
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log(error)
+                res.send('error')
+            } else {
+                console.log('Email sent: ' + info.response)
+                res.send('success')
+            }
+        })
+
+        try {
+            const emailSend = new PIC({
+                nama: picName,
+                brand: brandName,
+                category: category,
+                email: email,
+                no_telp: mobile,
+                address: address,
+                description: description,
+
+            })
+            await emailSend.save()
+            res.status(200).send({
+                data: emailSend,
+                message: 'email terkirim ke database'
+            })
+
         } catch (err) {
             res.status(422).send(err.message)
         }
